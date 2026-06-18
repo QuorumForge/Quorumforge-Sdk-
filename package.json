@@ -1,0 +1,70 @@
+{
+  "name": "quorumforge-sdk",
+  "version": "0.1.0",
+  "description": "TypeScript SDK for the QuorumForge multi-sig governance system on Soroban. Embed N-of-M maintainer governance into GitHub Actions, CLIs, bots, and dashboards.",
+  "author": "QuorumForge Contributors",
+  "license": "MIT",
+  "homepage": "https://github.com/quorumforge/quorumforge-sdk#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/quorumforge/quorumforge-sdk.git"
+  },
+  "bugs": {
+    "url": "https://github.com/quorumforge/quorumforge-sdk/issues"
+  },
+  "keywords": [
+    "stellar",
+    "soroban",
+    "multisig",
+    "governance",
+    "sdk",
+    "blockchain",
+    "quorumforge"
+  ],
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "lint": "tsc --noEmit",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "@stellar/stellar-sdk": "^12.3.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.14.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.4",
+    "tsup": "^8.1.0",
+    "typescript": "^5.4.5"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "testMatch": [
+      "**/__tests__/**/*.test.ts"
+    ],
+    "clearMocks": true,
+    "moduleNameMapper": {
+      "^(\\.{1,2}/.*)\\.js$": "$1"
+    }
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
