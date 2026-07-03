@@ -91,3 +91,35 @@ export function isProposalActive(proposal: Proposal): boolean {
 export function signaturesNeeded(proposal: Proposal, threshold: number): number {
   return Math.max(0, threshold - proposal.signatures.length);
 }
+
+// ─── RPC Retry ───────────────────────────────────────────────────────────────
+
+/**
+ * Retries an async function with exponential backoff on failure.
+ * Useful for wrapping Soroban RPC calls that may transiently fail.
+ *
+ * @param fn        - Async function to retry
+ * @param maxRetries - Maximum number of attempts (default: 3)
+ * @param baseDelayMs - Initial backoff delay in ms, doubles on each retry (default: 500)
+ *
+ * @example
+ * const board = await withRetry(() => client.getBoard());
+ */
+export async function withRetry<T>(
+  fn: () => Promise<T>,
+  maxRetries = 3,
+  baseDelayMs = 500
+): Promise<T> {
+  let lastError: unknown;
+  for (let attempt = 0; attempt <= maxRetries; attempt++) {
+    try {
+      return await fn();
+    } catch (err) {
+      lastError = err;
+      if (attempt < maxRetries) {
+        await new Promise((res) => setTimeout(res, baseDelayMs * Math.pow(2, attempt)));
+      }
+    }
+  }
+  throw lastError;
+}
