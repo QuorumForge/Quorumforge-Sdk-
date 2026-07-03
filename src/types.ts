@@ -71,16 +71,29 @@ export interface Proposal {
   createdAt: bigint;
   expiresAt: bigint;
   executedAt: bigint | null;
+  /** Human-readable description stored on-chain alongside the typed payload. */
+  description: string;
 }
 
 // ─── Operation Params ────────────────────────────────────────────────────────
 
-export type CreateProposalParams =
-  | { type: "ResolveIssue"; issueNumber: number; contributor: string; amount: string; assetContractId: string }
-  | { type: "TransferFunds"; recipient: string; amount: string; assetContractId: string; memo: string }
-  | { type: "AddMember"; newMember: string }
-  | { type: "RemoveMember"; member: string }
-  | { type: "UpdateThreshold"; newThreshold: number };
+/**
+ * Parameters shared by all proposal types.
+ * `description` is stored on-chain and displayed to signers.
+ */
+type CreateProposalBase = {
+  description: string;
+  ttlSeconds?: number;
+};
+
+export type CreateProposalParams = CreateProposalBase &
+  (
+    | { type: "ResolveIssue"; issueNumber: number; contributor: string; amount: string; assetContractId: string }
+    | { type: "TransferFunds"; recipient: string; amount: string; assetContractId: string; memo: string }
+    | { type: "AddMember"; newMember: string }
+    | { type: "RemoveMember"; member: string }
+    | { type: "UpdateThreshold"; newThreshold: number }
+  );
 
 // ─── Results ─────────────────────────────────────────────────────────────────
 
