@@ -138,6 +138,11 @@ export class QuorumForgeClient {
     return this.board.getProposalCount();
   }
 
+  /** Returns the current number of board members. */
+  async getMemberCount(): Promise<number> {
+    return this.board.getMemberCount();
+  }
+
   /**
    * Returns `true` if `address` has already signed the given proposal.
    * Useful for disabling the sign button in UI without fetching the full proposal.

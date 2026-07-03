@@ -105,6 +105,24 @@ export class BoardModule {
     return scValToNative(val) as bigint;
   }
 
+  async getMemberCount(): Promise<number> {
+    const result = await this.server.simulateTransaction(
+      new TransactionBuilder(
+        await this.server.getAccount(this.config.contractId),
+        { fee: BASE_FEE, networkPassphrase: this.networkPassphrase }
+      )
+        .addOperation(this.contract.call("get_member_count"))
+        .setTimeout(30)
+        .build()
+    );
+    if (SorobanRpc.Api.isSimulationError(result)) {
+      throw new Error(`Simulation failed: ${result.error}`);
+    }
+    const val = (result as SorobanRpc.Api.SimulateTransactionSuccessResponse).result?.retval;
+    if (!val) throw new Error("No return value from get_member_count");
+    return Number(scValToNative(val));
+  }
+
   async getStats(): Promise<BoardStats> {
     const result = await this.server.simulateTransaction(
       new TransactionBuilder(
