@@ -60,3 +60,21 @@ export class InsufficientTreasuryError extends QuorumForgeError {
     );
   }
 }
+
+export class UnauthorizedError extends QuorumForgeError {
+  constructor(action: string) {
+    super(`Unauthorized: you do not have permission to ${action}.`, "UNAUTHORIZED");
+  }
+}
+
+export class NetworkError extends QuorumForgeError {
+  constructor(message: string) {
+    super(`Network error: ${message}`, "NETWORK_ERROR");
+  }
+}
+
+export class ContractNotInitializedError extends QuorumForgeError {
+  constructor() {
+    super("Contract has not been initialized. Call initializeBoard first.", "NOT_INITIALIZED");
+  }
+}
