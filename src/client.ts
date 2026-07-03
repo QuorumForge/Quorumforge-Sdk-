@@ -125,6 +125,20 @@ export class QuorumForgeClient {
     return this.board.getStats();
   }
 
+  /** Returns the total number of proposals ever created on this board. */
+  async getProposalCount(): Promise<bigint> {
+    return this.board.getProposalCount();
+  }
+
+  /**
+   * Returns `true` if `address` has already signed the given proposal.
+   * Useful for disabling the sign button in UI without fetching the full proposal.
+   */
+  async hasSignedProposal(proposalId: bigint, address: string): Promise<boolean> {
+    const proposal = await this.proposals.getProposal(proposalId);
+    return proposal.signatures.includes(address);
+  }
+
   // ─── Treasury ──────────────────────────────────────────────────────────────
 
   /** Deposit `amount` of a Soroban asset into the governance treasury. */
