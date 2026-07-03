@@ -115,6 +115,14 @@ export class QuorumForgeClient {
     return this.proposals.getProposalsByStatus(status);
   }
 
+  /**
+   * Returns all proposals that are currently `Pending` (open for signatures).
+   * Equivalent to `getProposalsByStatus("Pending")`.
+   */
+  async getActiveProposals(): Promise<Proposal[]> {
+    return this.proposals.getProposalsByStatus("Pending");
+  }
+
   /** Fetch all proposals created or signed by a member address. */
   async getProposalsByMember(address: string): Promise<Proposal[]> {
     return this.proposals.getProposalsByMember(address);
