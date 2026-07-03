@@ -153,4 +153,46 @@ export class QuorumForgeClient {
   async deposit(amount: string, assetContractId: string): Promise<TxResult> {
     return this.proposals.deposit(amount, assetContractId);
   }
+
+  // ─── Polling ───────────────────────────────────────────────────────────────
+
+  /**
+   * Polls a proposal at a fixed interval until its status changes from `Pending`,
+   * then resolves with the final proposal state. Rejects after `timeoutMs`.
+   *
+   * @param proposalId - ID of the proposal to watch
+   * @param intervalMs - Polling interval in milliseconds (default: 5000)
+   * @param timeoutMs  - Maximum time to wait before rejecting (default: 300_000 = 5 min)
+   *
+   * @example
+   * const final = await client.watchProposal(1n);
+   * console.log(final.status); // "Executed" | "Cancelled" | "Expired"
+   */
+  async watchProposal(
+    proposalId: bigint,
+    intervalMs = 5_000,
+    timeoutMs = 300_000
+  ): Promise<Proposal> {
+    const deadline = Date.now() + timeoutMs;
+    return new Promise((resolve, reject) => {
+      const poll = async () => {
+        if (Date.now() >= deadline) {
+          reject(new Error(`watchProposal timed out after ${timeoutMs}ms for proposal #${proposalId}`));
+          return;
+        }
+        try {
+          const proposal = await this.proposals.getProposal(proposalId);
+          if (proposal.status !== "Pending") {
+            resolve(proposal);
+          } else {
+            setTimeout(poll, intervalMs);
+          }
+        } catch (err) {
+          setTimeout(poll, intervalMs); // retry on transient RPC errors
+        }
+      };
+      poll();
+    });
+  }
 }
+
