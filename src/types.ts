@@ -115,3 +115,8 @@ export interface SignProposalResult {
   txHash: string;
   executed: boolean;
 }
+
+/** Parameters for signing an existing proposal. */
+export interface SignProposalParams {
+  proposalId: bigint;
+}
