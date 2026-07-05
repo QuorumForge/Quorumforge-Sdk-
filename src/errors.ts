@@ -78,3 +78,9 @@ export class ContractNotInitializedError extends QuorumForgeError {
     super("Contract has not been initialized. Call initializeBoard first.", "NOT_INITIALIZED");
   }
 }
+
+export class DuplicateMemberError extends QuorumForgeError {
+  constructor(address: string) {
+    super(`Address ${address} is already a board member.`, "DUPLICATE_MEMBER");
+  }
+}
