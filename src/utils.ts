@@ -85,6 +85,14 @@ export function isProposalActive(proposal: Proposal): boolean {
 }
 
 /**
+ * Returns `true` if the proposal's expiry timestamp is in the past.
+ */
+export function isExpired(proposal: Proposal): boolean {
+  const now = BigInt(Math.floor(Date.now() / 1000));
+  return proposal.expiresAt <= now;
+}
+
+/**
  * Returns the number of additional signatures needed to reach quorum.
  * Returns 0 if already at or past the threshold.
  */
