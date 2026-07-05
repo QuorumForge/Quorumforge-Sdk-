@@ -10,6 +10,9 @@ export const RPC_URLS: Record<Network, string> = {
   futurenet: "https://rpc-futurenet.stellar.org",
 };
 
+/** Default proposal TTL: 7 days in seconds. */
+export const DEFAULT_TTL_SECONDS = 7 * 24 * 60 * 60;
+
 // ─── Client Config ───────────────────────────────────────────────────────────
 
 export interface ClientConfig {
