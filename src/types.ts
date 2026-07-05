@@ -74,6 +74,8 @@ export interface Proposal {
   createdAt: bigint;
   expiresAt: bigint;
   executedAt: bigint | null;
+  /** Timestamp when the proposal was cancelled, or null if not cancelled. */
+  cancelledAt: bigint | null;
   /** Human-readable description stored on-chain alongside the typed payload. */
   description: string;
 }
