@@ -19,6 +19,12 @@ export const MIN_THRESHOLD = 1;
 /** Maximum supported board size. */
 export const MAX_MEMBERS = 20;
 
+/** Minimum TTL allowed for a proposal, in seconds (1 hour). */
+export const MIN_TTL_SECONDS = 60 * 60;
+
+/** Maximum TTL allowed for a proposal, in seconds (30 days). */
+export const MAX_TTL_SECONDS = 30 * 24 * 60 * 60;
+
 // ─── Client Config ───────────────────────────────────────────────────────────
 
 export interface ClientConfig {
