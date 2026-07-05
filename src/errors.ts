@@ -84,3 +84,9 @@ export class DuplicateMemberError extends QuorumForgeError {
     super(`Address ${address} is already a board member.`, "DUPLICATE_MEMBER");
   }
 }
+
+export class ProposalNotFoundError extends QuorumForgeError {
+  constructor(proposalId: bigint) {
+    super(`Proposal #${proposalId} does not exist.`, "PROPOSAL_NOT_FOUND");
+  }
+}
