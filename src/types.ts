@@ -13,6 +13,12 @@ export const RPC_URLS: Record<Network, string> = {
 /** Default proposal TTL: 7 days in seconds. */
 export const DEFAULT_TTL_SECONDS = 7 * 24 * 60 * 60;
 
+/** Minimum allowed threshold for a board. */
+export const MIN_THRESHOLD = 1;
+
+/** Maximum supported board size. */
+export const MAX_MEMBERS = 20;
+
 // ─── Client Config ───────────────────────────────────────────────────────────
 
 export interface ClientConfig {
