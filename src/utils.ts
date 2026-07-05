@@ -93,6 +93,14 @@ export function isExpired(proposal: Proposal): boolean {
 }
 
 /**
+ * Returns `true` if the collected signatures meet or exceed majority
+ * (more than half of total members).
+ */
+export function isMajority(collected: number, totalMembers: number): boolean {
+  return collected > totalMembers / 2;
+}
+
+/**
  * Returns the number of additional signatures needed to reach quorum.
  * Returns 0 if already at or past the threshold.
  */
