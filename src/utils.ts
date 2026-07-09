@@ -68,11 +68,31 @@ export function formatTimeRemaining(expiresAt: bigint): string {
   const now = BigInt(Math.floor(Date.now() / 1000));
   if (expiresAt <= now) return "Expired";
   const secondsLeft = Number(expiresAt - now);
-  const hours = Math.floor(secondsLeft / 3600);
+  const days = Math.floor(secondsLeft / 86400);
+  const hours = Math.floor((secondsLeft % 86400) / 3600);
   const minutes = Math.floor((secondsLeft % 3600) / 60);
-  if (hours > 24) return `${Math.floor(hours / 24)}d remaining`;
+  const seconds = secondsLeft % 60;
+  if (days > 0) return `${days}d ${hours}h remaining`;
   if (hours > 0) return `${hours}h ${minutes}m remaining`;
-  return `${minutes}m remaining`;
+  if (minutes > 0) return `${minutes}m ${seconds}s remaining`;
+  return `${seconds}s remaining`;
+}
+
+/**
+ * Formats a Unix timestamp (seconds) as a locale-aware date-time string.
+ * @example formatTimestamp(1700000000n) → "Nov 14, 2023, 22:13 UTC"
+ */
+export function formatTimestamp(unixSeconds: bigint): string {
+  const date = new Date(Number(unixSeconds) * 1000);
+  return date.toLocaleString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    timeZone: "UTC",
+    timeZoneName: "short",
+  });
 }
 
 // ─── Proposal Helpers ────────────────────────────────────────────────────────
