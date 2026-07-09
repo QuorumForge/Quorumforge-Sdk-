@@ -6,7 +6,6 @@ import {
   BASE_FEE,
   nativeToScVal,
   scValToNative,
-  xdr,
 } from "@stellar/stellar-sdk";
 import type {
   BoardConfig,
@@ -16,7 +15,7 @@ import type {
   Network,
   ClientConfig,
 } from "./types.js";
-import { InvalidThresholdError } from "./errors.js";
+import { InvalidThresholdError, ContractNotInitializedError } from "./errors.js";
 
 const NETWORK_PASSPHRASE: Record<Network, string> = {
   testnet: Networks.TESTNET,
@@ -74,6 +73,10 @@ export class BoardModule {
     );
 
     if (SorobanRpc.Api.isSimulationError(result)) {
+      // Surface contract-not-initialized clearly
+      if (result.error?.includes("not initialized") || result.error?.includes("MissingValue")) {
+        throw new ContractNotInitializedError();
+      }
       throw new Error(`Simulation failed: ${result.error}`);
     }
 
