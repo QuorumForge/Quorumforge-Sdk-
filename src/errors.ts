@@ -21,7 +21,7 @@ export class AlreadySignedError extends QuorumForgeError {
 
 export class ProposalNotFoundError extends QuorumForgeError {
   constructor(proposalId: bigint) {
-    super(`Proposal #${proposalId} not found.`, "PROPOSAL_NOT_FOUND");
+    super(`Proposal #${proposalId} does not exist.`, "PROPOSAL_NOT_FOUND");
   }
 }
 
@@ -33,13 +33,19 @@ export class QuorumNotReachedError extends QuorumForgeError {
 
 export class ProposalExpiredError extends QuorumForgeError {
   constructor(proposalId: bigint) {
-    super(`Proposal #${proposalId} has expired.`, "PROPOSAL_EXPIRED");
+    super(`Proposal #${proposalId} has expired and can no longer be signed.`, "PROPOSAL_EXPIRED");
   }
 }
 
 export class ProposalAlreadyExecutedError extends QuorumForgeError {
   constructor(proposalId: bigint) {
     super(`Proposal #${proposalId} has already been executed.`, "ALREADY_EXECUTED");
+  }
+}
+
+export class ProposalCancelledError extends QuorumForgeError {
+  constructor(proposalId: bigint) {
+    super(`Proposal #${proposalId} has been cancelled and cannot be modified.`, "PROPOSAL_CANCELLED");
   }
 }
 
@@ -85,8 +91,8 @@ export class DuplicateMemberError extends QuorumForgeError {
   }
 }
 
-export class ProposalNotFoundError extends QuorumForgeError {
-  constructor(proposalId: bigint) {
-    super(`Proposal #${proposalId} does not exist.`, "PROPOSAL_NOT_FOUND");
+export class RpcTimeoutError extends QuorumForgeError {
+  constructor(method: string, timeoutMs: number) {
+    super(`RPC call '${method}' timed out after ${timeoutMs}ms.`, "RPC_TIMEOUT");
   }
 }
