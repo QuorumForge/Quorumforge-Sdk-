@@ -244,3 +244,40 @@ export function paginateProposals<T>(
     hasMore: start + pageSize < total,
   };
 }
+
+// ─── Sorting & Grouping ───────────────────────────────────────────────────────
+
+/**
+ * Sorts proposals by creation time.
+ * @param proposals - Array of proposals to sort
+ * @param order     - "asc" (oldest first) or "desc" (newest first, default)
+ */
+export function sortProposalsByDate<T extends { createdAt: bigint }>(
+  proposals: T[],
+  order: "asc" | "desc" = "desc"
+): T[] {
+  return [...proposals].sort((a, b) => {
+    const diff = a.createdAt - b.createdAt;
+    return order === "asc" ? Number(diff) : -Number(diff);
+  });
+}
+
+/**
+ * Groups proposals by their `proposalType` field.
+ * Returns a `Map` keyed by type with arrays of matching proposals.
+ *
+ * @example
+ * const grouped = groupProposalsByType(proposals);
+ * grouped.get("ResolveIssue") // all ResolveIssue proposals
+ */
+export function groupProposalsByType<T extends { proposalType: string }>(
+  proposals: T[]
+): Map<string, T[]> {
+  const map = new Map<string, T[]>();
+  for (const p of proposals) {
+    const existing = map.get(p.proposalType) ?? [];
+    existing.push(p);
+    map.set(p.proposalType, existing);
+  }
+  return map;
+}
