@@ -56,6 +56,22 @@ export interface BoardStats {
   cancelledProposals: bigint;
   expiredProposals: bigint;
   treasuryBalance: string;
+  /** Total number of individual signatures cast across all proposals. */
+  totalSignatures: bigint;
+}
+
+// ─── Pagination ───────────────────────────────────────────────────────────────
+
+/**
+ * Generic paginated result wrapper.
+ * Used by list endpoints that support cursor-based or offset pagination.
+ */
+export interface PaginatedResult<T> {
+  items: T[];
+  total: number;
+  page: number;
+  pageSize: number;
+  hasMore: boolean;
 }
 
 // ─── Proposals ───────────────────────────────────────────────────────────────
