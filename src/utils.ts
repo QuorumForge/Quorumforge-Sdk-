@@ -134,11 +134,36 @@ export async function withRetry<T>(
     } catch (err) {
       lastError = err;
       if (attempt < maxRetries) {
-        await new Promise((res) => setTimeout(res, baseDelayMs * Math.pow(2, attempt)));
+        // exponential backoff with ±20% jitter to avoid thundering-herd
+        const base = baseDelayMs * Math.pow(2, attempt);
+        const jitter = base * 0.2 * (Math.random() * 2 - 1);
+        await new Promise((res) => setTimeout(res, Math.max(0, base + jitter)));
       }
     }
   }
   throw lastError;
+}
+
+/**
+ * Wraps a promise with a timeout. Rejects with a `RpcTimeoutError` if the
+ * promise does not settle within `timeoutMs` milliseconds.
+ *
+ * @example
+ * const board = await withTimeout(client.getBoard(), "getBoard", 5000);
+ */
+export async function withTimeout<T>(
+  promise: Promise<T>,
+  label: string,
+  timeoutMs: number
+): Promise<T> {
+  let timer: ReturnType<typeof setTimeout>;
+  const timeoutPromise = new Promise<never>((_, reject) => {
+    timer = setTimeout(() => {
+      const { RpcTimeoutError } = require("./errors.js") as typeof import("./errors.js");
+      reject(new RpcTimeoutError(label, timeoutMs));
+    }, timeoutMs);
+  });
+  return Promise.race([promise, timeoutPromise]).finally(() => clearTimeout(timer));
 }
 
 // ─── Validation Helpers ──────────────────────────────────────────────────────
