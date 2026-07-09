@@ -1,4 +1,5 @@
 import type { ProposalStatus, ProposalType, Proposal } from "./types.js";
+import { MIN_TTL_SECONDS, MAX_TTL_SECONDS } from "./types.js";
 
 // ─── Status Formatting ───────────────────────────────────────────────────────
 
@@ -138,4 +139,53 @@ export async function withRetry<T>(
     }
   }
   throw lastError;
+}
+
+// ─── Validation Helpers ──────────────────────────────────────────────────────
+
+/**
+ * Validates a proposal TTL in seconds against the allowed min/max range.
+ * Returns an error message string, or `null` if valid.
+ *
+ * @example
+ * validateTtl(3600)  // null (valid — exactly 1 hour)
+ * validateTtl(100)   // "TTL must be at least 3600 seconds (1 hour)."
+ */
+export function validateTtl(ttlSeconds: number): string | null {
+  if (ttlSeconds < MIN_TTL_SECONDS) {
+    return `TTL must be at least ${MIN_TTL_SECONDS} seconds (1 hour).`;
+  }
+  if (ttlSeconds > MAX_TTL_SECONDS) {
+    return `TTL cannot exceed ${MAX_TTL_SECONDS} seconds (30 days).`;
+  }
+  return null;
+}
+
+/**
+ * Returns `true` if the string looks like a valid Soroban contract ID.
+ * Contract IDs begin with 'C' and are 56 characters of base32 (A–Z, 2–7).
+ */
+export function isValidContractId(id: string): boolean {
+  return /^C[A-Z2-7]{55}$/.test(id);
+}
+
+/**
+ * Returns a human-readable signature count string.
+ * @example formatSignatureCount(2, 3) → "2 / 3 signatures"
+ */
+export function formatSignatureCount(collected: number, required: number): string {
+  return `${collected} / ${required} signature${required === 1 ? "" : "s"}`;
+}
+
+/**
+ * Returns the canonical Soroban RPC URL for a given network.
+ * Falls back to testnet if the network is unrecognised.
+ */
+export function getRpcUrl(network: string): string {
+  const urls: Record<string, string> = {
+    testnet: "https://soroban-testnet.stellar.org",
+    mainnet: "https://soroban-mainnet.stellar.org",
+    futurenet: "https://rpc-futurenet.stellar.org",
+  };
+  return urls[network] ?? urls.testnet;
 }
