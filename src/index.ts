@@ -1,6 +1,6 @@
 export { QuorumForgeClient } from "./client.js";
-export { BoardClient } from "./board.js";
-export { ProposalsClient } from "./proposals.js";
+export { BoardModule } from "./board.js";
+export { ProposalsModule } from "./proposals.js";
 
 export * from "./types.js";
 export * from "./errors.js";
