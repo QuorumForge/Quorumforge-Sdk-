@@ -173,10 +173,25 @@ export class QuorumForgeClient {
    * const final = await client.watchProposal(1n);
    * console.log(final.status); // "Executed" | "Cancelled" | "Expired"
    */
+  /**
+   * Polls a proposal at a fixed interval until its status changes from `Pending`,
+   * then resolves with the final proposal state. Rejects after `timeoutMs`.
+   *
+   * @param proposalId   - ID of the proposal to watch
+   * @param intervalMs   - Polling interval in milliseconds (default: 5000)
+   * @param timeoutMs    - Maximum time to wait before rejecting (default: 300_000 = 5 min)
+   * @param onPoll       - Optional callback invoked on each poll with the current proposal
+   *
+   * @example
+   * const final = await client.watchProposal(1n, 3000, 60_000, (p) => {
+   *   console.log("signatures so far:", p.signatures.length);
+   * });
+   */
   async watchProposal(
     proposalId: bigint,
     intervalMs = 5_000,
-    timeoutMs = 300_000
+    timeoutMs = 300_000,
+    onPoll?: (proposal: Proposal) => void
   ): Promise<Proposal> {
     const deadline = Date.now() + timeoutMs;
     return new Promise((resolve, reject) => {
@@ -187,12 +202,13 @@ export class QuorumForgeClient {
         }
         try {
           const proposal = await this.proposals.getProposal(proposalId);
+          onPoll?.(proposal);
           if (proposal.status !== "Pending") {
             resolve(proposal);
           } else {
             setTimeout(poll, intervalMs);
           }
-        } catch (err) {
+        } catch {
           setTimeout(poll, intervalMs); // retry on transient RPC errors
         }
       };
