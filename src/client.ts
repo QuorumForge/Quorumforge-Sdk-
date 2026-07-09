@@ -146,10 +146,15 @@ export class QuorumForgeClient {
   /**
    * Returns `true` if `address` has already signed the given proposal.
    * Useful for disabling the sign button in UI without fetching the full proposal.
+   * Returns `false` (instead of throwing) if the proposal does not exist.
    */
   async hasSignedProposal(proposalId: bigint, address: string): Promise<boolean> {
-    const proposal = await this.proposals.getProposal(proposalId);
-    return proposal.signatures.includes(address);
+    try {
+      const proposal = await this.proposals.getProposal(proposalId);
+      return proposal.signatures.includes(address);
+    } catch {
+      return false;
+    }
   }
 
   // ─── Treasury ──────────────────────────────────────────────────────────────
