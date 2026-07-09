@@ -16,6 +16,7 @@ import type {
   ClientConfig,
 } from "./types.js";
 import { InvalidThresholdError, ContractNotInitializedError } from "./errors.js";
+import { MAX_MEMBERS } from "./types.js";
 
 const NETWORK_PASSPHRASE: Record<Network, string> = {
   testnet: Networks.TESTNET,
@@ -44,6 +45,14 @@ export class BoardModule {
 
     if (threshold < 1 || threshold > members.length) {
       throw new InvalidThresholdError(threshold, members.length);
+    }
+    if (members.length > MAX_MEMBERS) {
+      throw new Error(`Board cannot have more than ${MAX_MEMBERS} members.`);
+    }
+    // Deduplicate member check
+    const unique = new Set(members);
+    if (unique.size !== members.length) {
+      throw new Error("Duplicate member addresses are not allowed.");
     }
 
     const account = await this.server.getAccount(this.config.keypair.publicKey());
