@@ -97,9 +97,10 @@ export interface Proposal {
 /**
  * Parameters shared by all proposal types.
  * `description` is stored on-chain and displayed to signers.
+ * Defaults to an empty string if omitted.
  */
 type CreateProposalBase = {
-  description: string;
+  description?: string;
   ttlSeconds?: number;
 };
 
