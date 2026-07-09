@@ -214,3 +214,33 @@ export function getRpcUrl(network: string): string {
   };
   return urls[network] ?? urls.testnet;
 }
+
+// ─── Pagination ───────────────────────────────────────────────────────────────
+
+/**
+ * Paginates an array of proposals in-memory.
+ * Useful when the RPC returns the full list and you need to page it client-side.
+ *
+ * @param items    - Full list of proposals
+ * @param page     - 1-based page number
+ * @param pageSize - Number of items per page (default: 10)
+ *
+ * @example
+ * const page1 = paginateProposals(allProposals, 1, 10);
+ */
+export function paginateProposals<T>(
+  items: T[],
+  page: number,
+  pageSize = 10
+): { items: T[]; total: number; page: number; pageSize: number; hasMore: boolean } {
+  const total = items.length;
+  const start = (page - 1) * pageSize;
+  const sliced = items.slice(start, start + pageSize);
+  return {
+    items: sliced,
+    total,
+    page,
+    pageSize,
+    hasMore: start + pageSize < total,
+  };
+}
