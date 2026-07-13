@@ -128,10 +128,11 @@ Releases are handled by maintainers only:
 
 1. Bump the version in `package.json` following [semver](https://semver.org/).
 2. Update `CHANGELOG.md` with the new version section.
-3. Commit: `chore(release): v0.x.y`.
-4. Tag: `git tag v0.x.y`.
-5. Push tag: `git push --tags`.
-6. CI publishes to npm automatically via `npm run prepublishOnly` (which runs `npm run build`).
+3. Run `npm run build:prod` and verify the `dist/` output.
+4. Commit: `chore(release): v0.x.y`.
+5. Tag: `git tag v0.x.y`.
+6. Push tag: `git push --tags`.
+7. CI publishes to npm automatically via `npm run prepublishOnly`.
 
 ---
 

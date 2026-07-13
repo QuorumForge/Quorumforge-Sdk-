@@ -73,3 +73,21 @@ This SDK depends on `@stellar/stellar-sdk`. Pin the version in your `package.jso
 - **Client-side membership check only.** The on-chain contract enforces all governance rules. The SDK's membership pre-check is a developer convenience, not a security boundary.
 - **No built-in rate limiting.** If you embed this SDK in a bot, implement your own rate limiting to avoid flooding the RPC endpoint or the on-chain contract.
 - **BigInt serialisation.** If you serialise SDK return values to JSON, use a replacer that handles `BigInt` (e.g. `.toString()`). JavaScript's `JSON.stringify` throws on `BigInt` by default.
+
+---
+
+## RpcTimeoutError
+
+The `withTimeout` utility wraps any SDK call with a deadline. If the RPC does not respond in time, a `RpcTimeoutError` is thrown with code `"RPC_TIMEOUT"`. Always set reasonable timeouts in production integrations:
+
+```ts
+import { withTimeout, RpcTimeoutError } from "quorumforge-sdk";
+
+try {
+  const board = await withTimeout(client.getBoard(), "getBoard", 5_000);
+} catch (err) {
+  if (err instanceof RpcTimeoutError) {
+    // Handle timeout — retry, alert, or fallback
+  }
+}
+```
