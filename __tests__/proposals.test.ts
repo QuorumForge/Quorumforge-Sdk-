@@ -235,3 +235,11 @@ describe("ProposalsModule", () => {
     });
   });
 });
+
+  describe("getProposalsByMember — edge cases", () => {
+    it("returns empty array when member has no proposals", async () => {
+      _nativeResult = [];
+      const results = await proposals.getProposalsByMember(Keypair.random().publicKey());
+      expect(results).toEqual([]);
+    });
+  });

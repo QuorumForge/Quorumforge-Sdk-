@@ -128,6 +128,13 @@ describe("BoardModule", () => {
         b.initializeBoard({ members: ["G1"], threshold: 1 })
       ).rejects.toThrow("keypair required");
     });
+
+    it("throws when duplicate members are provided", async () => {
+      const addr = keypair.publicKey();
+      await expect(
+        board.initializeBoard({ members: [addr, addr], threshold: 1 })
+      ).rejects.toThrow("Duplicate member");
+    });
   });
 
   describe("getBoard", () => {
@@ -175,3 +182,11 @@ describe("BoardModule", () => {
     });
   });
 });
+
+  describe("getMemberCount", () => {
+    it("returns numeric member count from simulation", async () => {
+      _nativeResult = 3;
+      const result = await board.getMemberCount();
+      expect(typeof result).toBe("number");
+    });
+  });
