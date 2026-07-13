@@ -45,3 +45,30 @@ Follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and [Semantic V
 - Full error class hierarchy: `QuorumForgeError`, `NotAMemberError`, `AlreadySignedError`, `ProposalNotFoundError`, `QuorumNotReachedError`, `ProposalExpiredError`, `ProposalAlreadyExecutedError`, `InvalidThresholdError`, `InsufficientTreasuryError`.
 - TypeScript type definitions for all contract types.
 - Support for `testnet`, `mainnet`, and `futurenet` networks.
+
+---
+
+## [0.2.0] — Upcoming
+
+### Added
+
+- `validateTtl`, `isValidContractId`, `formatSignatureCount`, `getRpcUrl` utility functions.
+- `paginateProposals`, `sortProposalsByDate`, `groupProposalsByType` helpers.
+- `formatTimestamp` formats BigInt Unix timestamps as locale date strings.
+- `withTimeout` wraps any promise with a configurable rejection deadline.
+- `ProposalCancelledError` and `RpcTimeoutError` error classes.
+- `PaginatedResult<T>` generic type for paginated responses.
+- `totalSignatures` field on `BoardStats`.
+- `onPoll` callback on `watchProposal` for real-time UI progress updates.
+
+### Fixed
+
+- Removed duplicate `ProposalNotFoundError` in `errors.ts`.
+- `hasSignedProposal` returns `false` instead of throwing for unknown IDs.
+- `initializeBoard` enforces `MAX_MEMBERS` cap and rejects duplicate members.
+- `withRetry` backoff uses ±20% jitter to reduce thundering-herd risk.
+
+### Changed
+
+- `description` in `CreateProposalParams` is now optional.
+- `tsconfig.json` adds `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`, `noImplicitReturns`.
