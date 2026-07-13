@@ -45,6 +45,14 @@ export class QuorumForgeClient {
     this.proposals = new ProposalsModule(config);
   }
 
+  /**
+   * Creates a new `QuorumForgeClient` for read-only usage (no keypair).
+   * Suitable for dashboards and indexers that only need to query state.
+   */
+  static readonly(config: Omit<ClientConfig, "keypair">): QuorumForgeClient {
+    return new QuorumForgeClient(config);
+  }
+
   // ─── Board ─────────────────────────────────────────────────────────────────
 
   /** Initialise a new governance board with the given members and signing threshold. */
