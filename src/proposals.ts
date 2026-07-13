@@ -18,6 +18,7 @@ import type {
   Network,
   ClientConfig,
 } from "./types.js";
+import { RPC_URLS } from "./types.js";
 
 const NETWORK_PASSPHRASE: Record<Network, string> = {
   testnet: Networks.TESTNET,
@@ -34,7 +35,7 @@ export class ProposalsModule {
 
   constructor(config: ClientConfig) {
     this.config = config;
-    const rpcUrl = config.sorobanRpcUrl ?? "";
+    const rpcUrl = config.sorobanRpcUrl ?? RPC_URLS[config.network];
     this.server = new SorobanRpc.Server(rpcUrl, { allowHttp: rpcUrl.startsWith("http://") });
     this.contract = new Contract(config.contractId);
     this.networkPassphrase = NETWORK_PASSPHRASE[config.network];
