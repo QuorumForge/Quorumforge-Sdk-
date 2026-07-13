@@ -36,11 +36,13 @@
   ],
   "scripts": {
     "build": "tsup",
+    "build:prod": "NODE_ENV=production tsup",
     "dev": "tsup --watch",
     "test": "jest",
     "test:coverage": "jest --coverage",
+    "test:watch": "jest --watch",
     "lint": "tsc --noEmit",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build:prod"
   },
   "dependencies": {
     "@stellar/stellar-sdk": "^12.3.0"

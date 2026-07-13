@@ -8,4 +8,12 @@ export default defineConfig({
   clean: true,
   splitting: false,
   treeshake: true,
+  // Minify production builds
+  minify: process.env.NODE_ENV === "production",
+  // Provide a banner with version info for the ESM build
+  esbuildOptions(options) {
+    options.banner = {
+      js: "/* quorumforge-sdk — MIT License */",
+    };
+  },
 });
