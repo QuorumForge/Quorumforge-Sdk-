@@ -25,6 +25,9 @@ export const MIN_TTL_SECONDS = 60 * 60;
 /** Maximum TTL allowed for a proposal, in seconds (30 days). */
 export const MAX_TTL_SECONDS = 30 * 24 * 60 * 60;
 
+/** Maximum description length stored on-chain (mirrors contract constant). */
+export const MAX_DESCRIPTION_LENGTH = 256;
+
 // ─── Client Config ───────────────────────────────────────────────────────────
 
 export interface ClientConfig {
@@ -133,6 +136,8 @@ export type CreateProposalParams = CreateProposalBase &
 
 export interface TxResult {
   txHash: string;
+  /** Ledger sequence number the transaction was included in, if known. */
+  ledger?: number;
 }
 
 export interface CreateProposalResult {
