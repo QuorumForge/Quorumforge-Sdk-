@@ -77,7 +77,13 @@ try {
   await client.signProposal(id);
 } catch (err) {
   if (err instanceof QuorumForgeError) {
-    console.error(err.code); // e.g. "NOT_A_MEMBER"
+    console.error(err.code);
+    // Possible codes:
+    // "NOT_A_MEMBER" | "ALREADY_SIGNED" | "PROPOSAL_NOT_FOUND"
+    // "QUORUM_NOT_REACHED" | "PROPOSAL_EXPIRED" | "ALREADY_EXECUTED"
+    // "PROPOSAL_CANCELLED" | "INVALID_THRESHOLD" | "INSUFFICIENT_TREASURY"
+    // "UNAUTHORIZED" | "NETWORK_ERROR" | "NOT_INITIALIZED"
+    // "DUPLICATE_MEMBER" | "RPC_TIMEOUT"
   }
 }
 ```
