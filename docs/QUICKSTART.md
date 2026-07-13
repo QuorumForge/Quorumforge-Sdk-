@@ -143,8 +143,11 @@ import {
   NotAMemberError,
   AlreadySignedError,
   ProposalExpiredError,
+  ProposalCancelledError,
   InvalidThresholdError,
+  ContractNotInitializedError,
   withRetry,
+  withTimeout,
 } from "quorumforge-sdk";
 
 try {
@@ -154,16 +157,22 @@ try {
     console.error("Not a board member:", err.message);
   } else if (err instanceof AlreadySignedError) {
     console.warn("Already signed this proposal.");
+  } else if (err instanceof ProposalCancelledError) {
+    console.warn("This proposal was cancelled.");
   }
 }
 ```
 
-Use `withRetry` to handle transient RPC failures:
+Use `withRetry` to handle transient RPC failures, and `withTimeout` to cap wait time:
 
 ```ts
-import { withRetry } from "quorumforge-sdk";
+import { withRetry, withTimeout } from "quorumforge-sdk";
 
+// Retry up to 3 times with exponential backoff + jitter
 const board = await withRetry(() => client.getBoard());
+
+// Fail fast if the RPC takes more than 5 seconds
+const proposal = await withTimeout(client.getProposal(1n), "getProposal", 5_000);
 ```
 
 ---
@@ -177,3 +186,24 @@ const board = await withRetry(() => client.getBoard());
 | `futurenet` | `https://rpc-futurenet.stellar.org` |
 
 Override with `sorobanRpcUrl` in the client config if you use a private node.
+
+---
+
+## 9. Pagination & Sorting
+
+```ts
+import { paginateProposals, sortProposalsByDate, groupProposalsByType } from "quorumforge-sdk";
+
+const all = await client.getActiveProposals();
+
+// Page 1, 10 items per page
+const page = paginateProposals(all, 1, 10);
+console.log(page.hasMore); // true if more pages exist
+
+// Newest first
+const sorted = sortProposalsByDate(all, "desc");
+
+// Group by type
+const byType = groupProposalsByType(all);
+const transfers = byType.get("TransferFunds") ?? [];
+```
