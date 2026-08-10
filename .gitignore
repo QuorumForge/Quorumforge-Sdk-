@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+
+# Build
+dist/
+build/
+*.tsbuildinfo
+
+# Environment / secrets — never commit real env files
+.env
+.env.*
+!.env.example
+credentials.json
+*.pem
+*.key
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+
+# Logs / coverage
+*.log
+coverage/
+.nyc_output/

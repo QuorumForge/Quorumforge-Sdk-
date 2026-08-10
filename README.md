@@ -17,6 +17,26 @@ This SDK is the developer-facing layer that abstracts the Soroban contract into 
 
 ---
 
+## Live Testnet Reference
+
+| | |
+|---|---|
+| **Contract ID** | `CANU3HVHBFRT2CSZ73ZVDYKYNZMRP6J65KGO4QOTVA45AKORFA46UQ3V` |
+| **Network** | `testnet` |
+| **RPC** | `https://soroban-testnet.stellar.org` |
+| **Live demo UI** | [quorumforge-app.vercel.app](https://quorumforge-app.vercel.app/board/CANU3HVHBFRT2CSZ73ZVDYKYNZMRP6J65KGO4QOTVA45AKORFA46UQ3V) |
+| **Explorer** | [stellar.expert](https://stellar.expert/explorer/testnet/contract/CANU3HVHBFRT2CSZ73ZVDYKYNZMRP6J65KGO4QOTVA45AKORFA46UQ3V) |
+
+```ts
+const client = new QuorumForgeClient({
+  contractId: "CANU3HVHBFRT2CSZ73ZVDYKYNZMRP6J65KGO4QOTVA45AKORFA46UQ3V",
+  network: "testnet",
+});
+const board = await client.getBoard();
+```
+
+---
+
 ## Table of Contents
 
 - [Features](#features)
