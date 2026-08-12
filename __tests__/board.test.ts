@@ -76,6 +76,7 @@ const statsFixture: BoardStats = {
   cancelledProposals: BigInt(0),
   expiredProposals: BigInt(1),
   treasuryBalance: "9000",
+  totalSignatures: BigInt(4),
 };
 
 // ─── Tests ───────────────────────────────────────────────────────────────────
@@ -122,7 +123,10 @@ describe("BoardModule", () => {
     });
 
     it("throws when keypair is absent", async () => {
-      const noKeyConfig: ClientConfig = { ...config, keypair: undefined };
+      const noKeyConfig: ClientConfig = {
+        contractId: config.contractId,
+        network: config.network,
+      };
       const b = new BoardModule(noKeyConfig);
       await expect(
         b.initializeBoard({ members: ["G1"], threshold: 1 })
@@ -181,7 +185,6 @@ describe("BoardModule", () => {
       await expect(board.getStats()).rejects.toThrow("Simulation failed");
     });
   });
-});
 
   describe("getMemberCount", () => {
     it("returns numeric member count from simulation", async () => {
@@ -190,3 +193,4 @@ describe("BoardModule", () => {
       expect(typeof result).toBe("number");
     });
   });
+});

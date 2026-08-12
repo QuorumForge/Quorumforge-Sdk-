@@ -78,6 +78,8 @@ const proposalFixture: Proposal = {
   createdAt: BigInt(1000),
   expiresAt: BigInt(9999),
   executedAt: null,
+  cancelledAt: null,
+  description: "Test proposal",
 };
 
 // ─── Tests ───────────────────────────────────────────────────────────────────
@@ -142,7 +144,10 @@ describe("ProposalsModule", () => {
     });
 
     it("throws when keypair is absent", async () => {
-      const p = new ProposalsModule({ ...config, keypair: undefined });
+      const p = new ProposalsModule({
+        contractId: config.contractId,
+        network: config.network,
+      });
       await expect(
         p.createProposal({ type: "AddMember", newMember: "GNEW" })
       ).rejects.toThrow("keypair required");
@@ -157,7 +162,10 @@ describe("ProposalsModule", () => {
     });
 
     it("throws when keypair is absent", async () => {
-      const p = new ProposalsModule({ ...config, keypair: undefined });
+      const p = new ProposalsModule({
+        contractId: config.contractId,
+        network: config.network,
+      });
       await expect(p.signProposal(BigInt(1))).rejects.toThrow("keypair required");
     });
   });
@@ -202,7 +210,7 @@ describe("ProposalsModule", () => {
       _nativeResult = [proposalFixture];
       const results = await proposals.getProposalsByStatus("Pending");
       expect(results).toHaveLength(1);
-      expect(results[0].status).toBe("Pending");
+      expect(results[0]!.status).toBe("Pending");
     });
 
     it("returns empty array when no proposals match", async () => {
@@ -230,11 +238,13 @@ describe("ProposalsModule", () => {
     });
 
     it("throws when keypair is absent", async () => {
-      const p = new ProposalsModule({ ...config, keypair: undefined });
+      const p = new ProposalsModule({
+        contractId: config.contractId,
+        network: config.network,
+      });
       await expect(p.deposit("500", VALID_ASSET)).rejects.toThrow("keypair required");
     });
   });
-});
 
   describe("getProposalsByMember — edge cases", () => {
     it("returns empty array when member has no proposals", async () => {
@@ -243,3 +253,4 @@ describe("ProposalsModule", () => {
       expect(results).toEqual([]);
     });
   });
+});

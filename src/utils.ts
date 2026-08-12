@@ -227,12 +227,13 @@ export function formatSignatureCount(collected: number, required: number): strin
  * Falls back to testnet if the network is unrecognised.
  */
 export function getRpcUrl(network: string): string {
+  const TESTNET_RPC = "https://soroban-testnet.stellar.org";
   const urls: Record<string, string> = {
-    testnet: "https://soroban-testnet.stellar.org",
+    testnet: TESTNET_RPC,
     mainnet: "https://soroban-mainnet.stellar.org",
     futurenet: "https://rpc-futurenet.stellar.org",
   };
-  return urls[network] ?? urls.testnet;
+  return urls[network] ?? TESTNET_RPC;
 }
 
 // ─── Pagination ───────────────────────────────────────────────────────────────

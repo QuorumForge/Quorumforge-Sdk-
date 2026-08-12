@@ -40,6 +40,8 @@ const proposalFixture: Proposal = {
   createdAt: BigInt(1000),
   expiresAt: BigInt(9999),
   executedAt: null,
+  cancelledAt: null,
+  description: "Test proposal",
 };
 
 const statsFixture: BoardStats = {
@@ -49,6 +51,7 @@ const statsFixture: BoardStats = {
   cancelledProposals: BigInt(0),
   expiredProposals: BigInt(1),
   treasuryBalance: "5000",
+  totalSignatures: BigInt(2),
 };
 
 // ─── Tests ───────────────────────────────────────────────────────────────────

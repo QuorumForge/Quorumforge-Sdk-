@@ -242,12 +242,12 @@ describe("sortProposalsByDate", () => {
 
   it("sorts desc by default", () => {
     const result = sortProposalsByDate([a, b]);
-    expect(result[0].createdAt).toBe(200n);
+    expect(result[0]!.createdAt).toBe(200n);
   });
 
   it("sorts asc when specified", () => {
     const result = sortProposalsByDate([b, a], "asc");
-    expect(result[0].createdAt).toBe(100n);
+    expect(result[0]!.createdAt).toBe(100n);
   });
 });
 
