@@ -23,7 +23,7 @@ import { Keypair } from "@stellar/stellar-sdk";
 const keypair = Keypair.fromSecret("SXXXXX...");
 
 const client = new QuorumForgeClient({
-  contractId: "CXXXXXX...",          // deployed contract ID
+  contractId: "CANU3HVHBFRT2CSZ73ZVDYKYNZMRP6J65KGO4QOTVA45AKORFA46UQ3V",          // deployed contract ID
   network: "testnet",                // "testnet" | "mainnet" | "futurenet"
   keypair,                           // required for mutating operations
 });
@@ -33,7 +33,7 @@ For read-only usage (queries only), omit `keypair`:
 
 ```ts
 const client = new QuorumForgeClient({
-  contractId: "CXXXXXX...",
+  contractId: "CANU3HVHBFRT2CSZ73ZVDYKYNZMRP6J65KGO4QOTVA45AKORFA46UQ3V",
   network: "testnet",
 });
 ```
