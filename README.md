@@ -571,7 +571,7 @@ Override for local development:
 
 ```ts
 const client = new QuorumForgeClient({
-  contractId: "C...",
+  contractId: "CANU3HVHBFRT2CSZ73ZVDYKYNZMRP6J65KGO4QOTVA45AKORFA46UQ3V",
   network: "testnet",
   sorobanRpcUrl: "http://localhost:8000/soroban/rpc", // stellar/quickstart
 });
@@ -583,7 +583,7 @@ Omit `keypair` for a read-only client (queries only):
 
 ```ts
 const readOnly = new QuorumForgeClient({
-  contractId: "C...",
+  contractId: "CANU3HVHBFRT2CSZ73ZVDYKYNZMRP6J65KGO4QOTVA45AKORFA46UQ3V",
   network: "mainnet",
   // no keypair — safe to use in frontend/public dashboards
 });
