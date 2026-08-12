@@ -98,7 +98,7 @@ import { QuorumForgeClient } from "quorumforge-sdk";
 import { Keypair } from "@stellar/stellar-sdk";
 
 const client = new QuorumForgeClient({
-  contractId: "CCONTRACT_ID_HERE",
+  contractId: "CANU3HVHBFRT2CSZ73ZVDYKYNZMRP6J65KGO4QOTVA45AKORFA46UQ3V",
   network: "testnet",
   keypair: Keypair.fromSecret(process.env.QUORUMFORGE_SECRET!),
 });
@@ -122,8 +122,8 @@ This example walks through the full lifecycle of an issue bounty proposal with a
 import { QuorumForgeClient, NotAMemberError, ProposalExpiredError } from "quorumforge-sdk";
 import { Keypair } from "@stellar/stellar-sdk";
 
-const CONTRACT_ID = "CCONTRACT_ID_HERE";
-const ASSET_CONTRACT = "CASSET_CONTRACT_ID_HERE";
+const CONTRACT_ID = "CANU3HVHBFRT2CSZ73ZVDYKYNZMRP6J65KGO4QOTVA45AKORFA46UQ3V";
+const ASSET_CONTRACT = "CUSDC..."; // replace with your asset contract ID if using token transfers
 
 // Three board members
 const memberA = Keypair.fromSecret(process.env.MEMBER_A_SECRET!);
@@ -571,7 +571,7 @@ Override for local development:
 
 ```ts
 const client = new QuorumForgeClient({
-  contractId: "C...",
+  contractId: "CANU3HVHBFRT2CSZ73ZVDYKYNZMRP6J65KGO4QOTVA45AKORFA46UQ3V",
   network: "testnet",
   sorobanRpcUrl: "http://localhost:8000/soroban/rpc", // stellar/quickstart
 });
@@ -583,7 +583,7 @@ Omit `keypair` for a read-only client (queries only):
 
 ```ts
 const readOnly = new QuorumForgeClient({
-  contractId: "C...",
+  contractId: "CANU3HVHBFRT2CSZ73ZVDYKYNZMRP6J65KGO4QOTVA45AKORFA46UQ3V",
   network: "mainnet",
   // no keypair — safe to use in frontend/public dashboards
 });
