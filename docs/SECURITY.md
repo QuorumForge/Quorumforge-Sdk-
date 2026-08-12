@@ -16,7 +16,7 @@ Once `1.0.0` is released, only the latest minor release on the current major wil
 
 Instead:
 
-1. Email the maintainers at **security@quorumforge.dev** (or open a [private GitHub security advisory](https://github.com/quorumforge/quorumforge-sdk/security/advisories/new)).
+1. Open a [private GitHub security advisory](https://github.com/QuorumForge/Quorumforge-Sdk-/security/advisories/new).
 2. Include:
    - A clear description of the vulnerability.
    - Steps to reproduce or a minimal proof-of-concept.
