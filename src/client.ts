@@ -23,7 +23,7 @@ import { NotAMemberError } from "./errors.js";
  * import { Keypair } from "@stellar/stellar-sdk";
  *
  * const client = new QuorumForgeClient({
- *   contractId: "C...",
+ *   contractId: "CANU3HVHBFRT2CSZ73ZVDYKYNZMRP6J65KGO4QOTVA45AKORFA46UQ3V",
  *   network: "testnet",
  *   keypair: Keypair.fromSecret("S..."),
  * });

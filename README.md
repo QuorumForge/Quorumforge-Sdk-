@@ -3,7 +3,7 @@
 [![npm version](https://img.shields.io/npm/v/quorumforge-sdk.svg)](https://www.npmjs.com/package/quorumforge-sdk)
 [![npm downloads](https://img.shields.io/npm/dm/quorumforge-sdk.svg)](https://www.npmjs.com/package/quorumforge-sdk)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Build](https://github.com/quorumforge/quorumforge-sdk/actions/workflows/ci.yml/badge.svg)](https://github.com/quorumforge/quorumforge-sdk/actions)
+[![Build](https://github.com/QuorumForge/Quorumforge-Sdk-/actions/workflows/ci.yml/badge.svg)](https://github.com/QuorumForge/Quorumforge-Sdk-/actions)
 [![Live Demo](https://img.shields.io/badge/Live_Demo-Testnet_board-7c3aed?style=for-the-badge)](https://quorumforge-app.vercel.app/board/CANU3HVHBFRT2CSZ73ZVDYKYNZMRP6J65KGO4QOTVA45AKORFA46UQ3V)
 
 A TypeScript SDK for the **QuorumForge** multi-sig governance system on [Soroban](https://soroban.stellar.org). Abstracts all smart contract interaction so any project can embed **N-of-M maintainer governance** into GitHub Actions, bots, CLIs, or custom dashboards — in minutes, not days.
@@ -637,8 +637,8 @@ quorumforge-sdk/
 Contributions are welcome. Please read [CONTRIBUTING.md](./docs/CONTRIBUTING.md) before opening a pull request.
 
 ```bash
-git clone https://github.com/quorumforge/quorumforge-sdk.git
-cd quorumforge-sdk
+git clone https://github.com/QuorumForge/Quorumforge-Sdk-.git
+cd Quorumforge-Sdk-
 npm install
 npm test
 ```

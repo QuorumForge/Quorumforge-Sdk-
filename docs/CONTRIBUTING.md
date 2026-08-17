@@ -32,8 +32,8 @@ This project follows the [Contributor Covenant](https://www.contributor-covenant
 ### Setup
 
 ```bash
-git clone https://github.com/quorumforge/quorumforge-sdk.git
-cd quorumforge-sdk
+git clone https://github.com/QuorumForge/Quorumforge-Sdk-.git
+cd Quorumforge-Sdk-
 npm install
 ```
 
